@@ -24,7 +24,7 @@ with open("heathrow_data.csv", "w") as heathrow_data:
     writer = csv.DictWriter(heathrow_data, fields)
     writer.writeheader()
 
-    for page in data_links[:2]:
+    for page in data_links:
         final_data = []
         data_page = requests.get(page).text
         print(page)

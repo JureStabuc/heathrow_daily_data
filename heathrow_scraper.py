@@ -31,8 +31,6 @@ with open("heathrow_data.csv", "w") as heathrow_data:
         soup = BS(data_page, "html.parser")
         date = soup.find("title")
         table = soup.find("tbody")
-        #print(date)
-        #print(table)
         rows = table.find_all("tr", class_=["row-3", "row-4", "row-36", "row-37"])
         for row in rows:
             data = {
@@ -42,18 +40,18 @@ with open("heathrow_data.csv", "w") as heathrow_data:
                 "complaints" : [],
                 "total complaints" : [],
             }
-            # rows = table.find_all("tr", class_=["row-3", "row-4", "row-36", "row-37"])
+
             cols = [row.find_all("td", class_="column-2")[0] for row in rows]
             data["arrivals"].append(cols[0].get_text())
             data["departures"].append(cols[1].get_text())
             data["complaints"].append(cols[2].get_text())
             data["total complaints"].append(cols[3].get_text())
-        #print(data)
+
         for day in date:
             data["date"].append(day)
             final_data.append(data)
         time.sleep(1)
-        # print(final_data)
+
         row = {"date": day, "total num arrivals": data["arrivals"][0], "total num departures": data["departures"][0], "total num of people making complaints": data["complaints"][0], "total number of all complaints (phone, email, web, letters)": data["total complaints"][0] }
-        #print(row)
+        
         writer.writerow(row)
